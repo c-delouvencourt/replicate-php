@@ -1,6 +1,7 @@
 {
     "name": "c-delouvencourt/replicate-php",
     "description": "A PHP client for the Replicate API",
+    "version": "0.1.0",
     "keywords": ["replicate", "php", "package"],
     "license": "MIT",
     "authors": [
