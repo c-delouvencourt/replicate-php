@@ -1,12 +1,12 @@
 {
-    "name": "benbjurstrom/replicate-php",
+    "name": "c-delouvencourt/replicate-php",
     "description": "A PHP client for the Replicate API",
     "keywords": ["replicate", "php", "package"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Ben Bjurstrom",
-            "email": "bbjurstrom@gmail.com"
+            "name": "Clément de Louvencourt",
+            "email": "clement@meilleursbiens.com"
         }
     ],
     "require": {

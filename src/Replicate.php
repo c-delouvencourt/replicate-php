@@ -34,4 +34,9 @@ final class Replicate extends Connector
     {
         return new PredictionsResource($this);
     }
+
+    public function deployment(string $deployment_name): DeploymentResource
+    {
+        return new DeploymentResource($this, $deployment_name);
+    }
 }
