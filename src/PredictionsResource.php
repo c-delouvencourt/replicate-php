@@ -7,6 +7,7 @@ use BenBjurstrom\Replicate\Data\PredictionsData;
 use BenBjurstrom\Replicate\Requests\GetPrediction;
 use BenBjurstrom\Replicate\Requests\GetPredictions;
 use BenBjurstrom\Replicate\Requests\PostPrediction;
+use BenBjurstrom\Replicate\Requests\PostPredictionModel;
 use Exception;
 
 class PredictionsResource extends Resource
@@ -56,6 +57,32 @@ class PredictionsResource extends Resource
     public function create(string $version, array $input): PredictionData
     {
         $request = new PostPrediction($version, $input);
+        if ($this->webhookUrl) {
+            // https://replicate.com/changelog/2023-02-10-improved-webhook-events-and-event-filtering
+            $request->body()->merge([
+                'webhook' => $this->webhookUrl,
+                'webhook_events_filter' => $this->webhookEvents,
+            ]);
+        }
+
+        $response = $this->connector->send($request);
+
+        $data = $response->dtoOrFail();
+        if (! $data instanceof PredictionData) {
+            throw new Exception('Unexpected data type');
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param  array<string, float|int|string|null>  $input
+     *
+     * @throws Exception
+     */
+    public function createFromModel(string $model, array $input): PredictionData
+    {
+        $request = new PostPredictionModel($model, $input);
         if ($this->webhookUrl) {
             // https://replicate.com/changelog/2023-02-10-improved-webhook-events-and-event-filtering
             $request->body()->merge([
